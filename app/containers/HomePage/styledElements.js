@@ -2,7 +2,7 @@
     Styles Components to Design Home Page Components and Sections.
 */
 
-import styled from 'styled-components';
+import styled, { css } from 'styled-components';
 import { Link } from 'react-router-dom';
 
 export const HomePageWrapper = styled.section`
@@ -21,7 +21,41 @@ export const PageTitle = styled.h1`
 `;
 
 export const InputContainer = styled.div`
-  padding: 20px 10px;
+  padding: 2em 1em;
+  position: relative;
+`;
+
+export const UsersContainer = styled.div`
+  position: absolute;
+  z-index: 2;
+  background: #fff;
+  border-radius: 0.5em;
+  min-height: 10em;
+  max-height: 20em;
+  box-shadow: 0px 4px 4px 0px rgba(0, 0, 0, 0.1);
+  width: calc(100% - 2em);
+  left: 1em;
+  top: 8.1em;
+  transition: 250ms all ease-in;
+  transform: translateY(10%);
+  overflow: hidden;
+  overflow-y: auto;
+  ${({ visible }) =>
+    visible &&
+    css`
+      height: auto;
+      transform: translateY(0%);
+    `};
+`;
+
+export const LoaderWrapper = styled.div`
+  position: absolute;
+  width: 100%;
+  height: 100%;
+  font-size: 1.5em;
+  display: flex;
+  align-items: center;
+  justify-content: center;
 `;
 
 export const TextInput = styled.input`
@@ -29,7 +63,7 @@ export const TextInput = styled.input`
   color: rgba(0, 0, 0, 0.8);
   padding: 0 1em;
   width: 100%;
-  height: 50px;
+  height: 4em;
   border: 0;
   font-size: 1.5em;
   border-radius: 4px;
@@ -55,29 +89,42 @@ export const PostsContent = styled.div`
 
 export const PostCard = styled.div`
   width: 33.3%;
-  padding: 15px;
+  padding: 1em;
   display: flex;
   flex: 1 0 33.3%;
+  &:nth-child(3n + 1) {
+    padding-left: 0;
+  }
+  @media only screen and (max-width: 964px) and (min-width: 424px) {
+    width: 50%;
+    flex: 1 0 50%;
+  }
+  @media only screen and (max-width: 424px) {
+    width: 100%;
+    padding: 1em 0;
+    flex: 1 0 100%;
+  }
 `;
 
 export const PostItem = styled(Link)`
-  border-radius: 5px;
-  padding: 10px;
+  border-radius: 0.5em;
+  padding: 1em;
   display: flex;
+  background: #fff;
   flex-direction: column;
   transition: 350ms all ease-in;
   box-shadow: 2px 4px 4px 0px rgba(0, 0, 0, 0.1);
-  cursor: pointer;
   &:hover {
     box-shadow: 4px 8px 8px 0px rgba(0, 0, 0, 0.1);
     transform: scale(1.1, 1.1);
+    cursor: pointer;
   }
 `;
 
 export const PostTitle = styled.div`
-  color: rgba(0, 0, 0, 0.6);
+  color: rgba(0, 0, 0, 0.65);
   font-weight: 500;
-  font-size: 2.4em;
+  font-size: 2em;
   line-height: 1.2;
   margin-bottom: 1em;
   text-decoration: none;
@@ -88,13 +135,25 @@ export const PostTitle = styled.div`
 `;
 
 export const PostUserName = styled(Link)`
-  color: #009688;
+  color: rgb(83, 77, 253);
   font-weight: 500;
-  font-size: 1.8em;
+  font-size: 1.6em;
   transition: 250ms all ease-in;
   &:hover {
-    color: rgba(#009688 0.8);
+    color: rgb(162, 103, 214);
   }
 `;
 
-export const UserItem = styled.div``;
+export const UserLink = styled(Link)`
+  padding: 1em;
+  display: flex;
+  align-items: left;
+  cursor: pointer;
+  font-size: 1.8em;
+  text-trasnform: capitalize;
+  color: rgb(162, 103, 214);
+  &:hover {
+    color: rgb(83, 77, 253);
+    background: #f5f5f5;
+  }
+`;

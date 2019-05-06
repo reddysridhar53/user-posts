@@ -9,7 +9,12 @@ import debounce from 'lodash/debounce';
 import injectSaga from 'utils/injectSaga';
 import injectReducer from 'utils/injectReducer';
 
-import { selectPosts, selectFindUsers, selectLoadingPosts } from './selectors';
+import {
+  selectPosts,
+  selectFindUsers,
+  selectLoadingPosts,
+  selectFindingUsers,
+} from './selectors';
 import reducer from './reducer';
 import saga from './saga';
 import { getPosts, findUsers } from './actions';
@@ -26,18 +31,23 @@ import {
   PostItem,
   PostTitle,
   PostUserName,
-  UserItem,
+  UserLink,
+  UsersContainer,
+  LoaderWrapper,
 } from './styledElements';
 
 /* eslint-disable react/prefer-stateless-function */
 export class HomePage extends PureComponent {
   state = {
     query: '',
+    showUserListContainer: '',
   };
 
   constructor(props) {
     super(props);
     this.debounceSearch = debounce(this.debounceSearch, 500);
+    this.userListContainer = React.createRef();
+    document.addEventListener('click', this.handleOutSideClick, false);
   }
 
   debouncedSearch(fn, time) {
@@ -65,9 +75,20 @@ export class HomePage extends PureComponent {
   handleSearchQueryChange = e => {
     const query = e.currentTarget.value;
 
+    this.setState({ showUserListContainer: true });
     if (!query) return;
     this.setState({ query });
     this.debounceSearch();
+  };
+
+  handleOutSideClick = event => {
+    if (
+      event.target &&
+      !this.userListContainer.current.contains(event.target) &&
+      this.state.showUserListContainer
+    ) {
+      this.setState({ showUserListContainer: false });
+    }
   };
 
   debounceSearch = () => {
@@ -81,7 +102,6 @@ export class HomePage extends PureComponent {
     if (loadingPosts) {
       return <LoadingIndicator />;
     }
-    console.log(posts);
     return posts.map(post => {
       const {
         id,
@@ -100,30 +120,52 @@ export class HomePage extends PureComponent {
   };
 
   renderUsers = () => {
-    const { users } = this.props;
-
-    return users.map(user => {
-      const { id, fullName } = user;
+    const { users, findingUsers } = this.props;
+    if (findingUsers) {
       return (
-        <UserItem key={id} to={`/users/${id}`}>
-          {fullName}
-        </UserItem>
+        <LoaderWrapper>
+          <LoadingIndicator mini />
+        </LoaderWrapper>
+      );
+    }
+    if (!findingUsers && this.state.query && !users.length) {
+      return (
+        <LoaderWrapper>
+          {`No Users found with query ${this.state.query}`}
+        </LoaderWrapper>
+      );
+    }
+    return users.map(user => {
+      const { id, name } = user;
+      return (
+        <UserLink key={id} to={`/users/${id}`}>
+          {name}
+        </UserLink>
       );
     });
   };
 
   render() {
+    const { users } = this.props;
+
     return (
       <HomePageWrapper>
         <Helmet>
           <title>Huddl Home Page - Sample posts(Frontend Task)</title>
           <meta name="description" content="Sample Posts List" />
         </Helmet>
-        <InputContainer>
+        <InputContainer ref={this.userListContainer}>
           <TextInput
             onChange={this.handleSearchQueryChange}
             placeholder="Search for users"
           />
+          {this.state.showUserListContainer ? (
+            <UsersContainer
+              visible={!!users.length || this.state.showUserListContainer}
+            >
+              {this.renderUsers()}
+            </UsersContainer>
+          ) : null}
         </InputContainer>
         <PostsContainer>
           <PageTitle>Posts</PageTitle>
@@ -137,7 +179,8 @@ export class HomePage extends PureComponent {
 HomePage.propTypes = {
   onGetPosts: PropTypes.func.isRequired,
   onFindUsers: PropTypes.func.isRequired,
-  loadingPosts: PropTypes.bool,
+  loadingPosts: PropTypes.bool.isRequired,
+  findingUsers: PropTypes.bool.isRequired,
   posts: PropTypes.array,
   users: PropTypes.array,
 };
@@ -146,6 +189,7 @@ const mapStateToProps = createStructuredSelector({
   posts: selectPosts(),
   users: selectFindUsers(),
   loadingPosts: selectLoadingPosts(),
+  findingUsers: selectFindingUsers(),
 });
 
 const mapDispatchToProps = dispatch => ({

@@ -1,5 +1,6 @@
 import React from 'react';
-import styled, { keyframes } from 'styled-components';
+import PropTypes from 'prop-types';
+import styled, { keyframes, css } from 'styled-components';
 
 const rotate = keyframes`
     from {
@@ -12,28 +13,40 @@ const rotate = keyframes`
 `;
 
 const Loader = styled.div`
-  border: 8px solid #f5f7f9;
+  border: 0.8em solid #f5f7f9;
   border-radius: 50%;
-  border-top: 8px solid rgb(83, 77, 253);
-  width: 60px;
-  height: 60px;
+  border-top: 0.8em solid rgb(83, 77, 253);
+  width: 6em;
+  height: 6em;
   animation: ${rotate} 2s linear infinite;
+  ${({ mini }) =>
+    mini &&
+    css`
+      width: 4em;
+      height: 4em;
+      border: 0.6em solid #f5f7f9;
+      border-top: 0.6em solid rgb(83, 77, 253);
+    `}
 `;
 
 const LoadingWrapper = styled.div`
   width: 100%;
-  min-height: 300px;
+  min-height: 30em;
   display: flex;
   align-items: center;
   justify-content: center;
 `;
 
-function LoadingIndicator() {
+function LoadingIndicator({ mini }) {
   return (
     <LoadingWrapper>
-      <Loader />
+      <Loader mini={mini} />
     </LoadingWrapper>
   );
 }
+
+LoadingIndicator.propTypes = {
+  mini: PropTypes.bool,
+};
 
 export default LoadingIndicator;

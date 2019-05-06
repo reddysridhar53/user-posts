@@ -12,6 +12,8 @@ import styled from 'styled-components';
 import { Switch, Route } from 'react-router-dom';
 
 import HomePage from 'containers/HomePage/Loadable';
+import PostsPage from 'containers/PostsPage/Loadable';
+import UsersPage from 'containers/UsersPage/Loadable';
 import NotFoundPage from 'containers/NotFoundPage/Loadable';
 import Header from 'components/Header';
 // import Footer from 'components/Footer';
@@ -25,6 +27,7 @@ const AppWrapper = styled.main`
   width: 100%;
   height: 100%;
   padding: 0;
+  background: #f5f5f5;
   flex-direction: column;
 `;
 
@@ -41,6 +44,8 @@ export default function App() {
       <Header />
       <Switch>
         <Route exact path="/" component={HomePage} />
+        <Route exact path="/posts/:postId" component={PostsPage} />
+        <Route exact path="/users/:userId" component={UsersPage} />
         <Route path="" component={NotFoundPage} />
       </Switch>
       {/* <Footer /> */}

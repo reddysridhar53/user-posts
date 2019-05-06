@@ -12,11 +12,11 @@ export const getPosts = (postId = '') => {
 
 export const findUsers = (query = '') => {
   if (query) {
-    query = `q=${query}`;
+    query = `?q=${query}`;
   }
   const options = {};
 
-  options.url = `${config.API_URL}/users/${query}`;
+  options.url = `${config.API_URL}/users${query}`;
   options.method = 'GET';
   return makeRequest(options);
 };

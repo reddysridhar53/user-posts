@@ -8,7 +8,7 @@ function NavBar({ sticky, logoImg }) {
       <ImageWrapper>
         <Img src={logoImg} alt="Huddl AI" />
       </ImageWrapper>
-      <H>Huddle</H>
+      <H>Huddl</H>
     </NavWrapper>
   );
 }

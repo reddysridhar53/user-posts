@@ -1,7 +1,7 @@
 {
-  "name": "react-boilerplate",
-  "version": "3.7.0",
-  "description": "A highly scalable, offline-first foundation with the best DX and a focus on performance and best practices",
+  "name": "Huddl-Frontend-Task",
+  "version": "1.0.0",
+  "description": "An application to showcase sample articles and users created the post and comments added to it.",
   "repository": {
     "type": "git",
     "url": "git://github.com/react-boilerplate/react-boilerplate.git"
@@ -60,9 +60,6 @@
   },
   "dependencies": {
     "@babel/polyfill": "7.0.0",
-    "@rebass/grid": "^6.0.0",
-    "axios": "^0.18.0",
-    "chalk": "^2.4.1",
     "compression": "1.7.3",
     "connected-react-router": "4.5.0",
     "cross-env": "5.2.0",
@@ -78,8 +75,8 @@
     "lodash": "4.17.11",
     "minimist": "1.2.0",
     "prop-types": "15.6.2",
-    "react": "16.6.0",
-    "react-dom": "16.6.0",
+    "react": "16.8.0",
+    "react-dom": "16.8.0",
     "react-helmet": "5.2.0",
     "react-intl": "2.7.2",
     "react-redux": "5.0.7",

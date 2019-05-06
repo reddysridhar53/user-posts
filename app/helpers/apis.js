@@ -21,6 +21,14 @@ export const findUsers = (query = '') => {
   return makeRequest(options);
 };
 
+export const findUserById = (userId) => {
+  const options = {};
+
+  options.url = `${config.API_URL}/users/${userId}`;
+  options.method = 'GET';
+  return makeRequest(options);
+};
+
 const parseJson = data => {
   if (JSON.parse && JSON.parse(data)) {
     return JSON.parse(data);

@@ -29,6 +29,22 @@ export const findUserById = (userId) => {
   return makeRequest(options);
 };
 
+export const getPostById = (postId) => {
+  const options = {};
+
+  options.url = `${config.API_URL}/posts/${postId}?_expand=user`;
+  options.method = 'GET';
+  return makeRequest(options);
+};
+
+export const getCommentsByPostId = (postId) => {
+  const options = {};
+
+  options.url = `${config.API_URL}/posts/${postId}/comments?_expand=user`;
+  options.method = 'GET';
+  return makeRequest(options);
+};
+
 const parseJson = data => {
   if (JSON.parse && JSON.parse(data)) {
     return JSON.parse(data);

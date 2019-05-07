@@ -1,5 +1,5 @@
 /**
- * Asynchronously loads the component for PostsPage
+ * Asynchronously loads PostsPage
  */
 
 import React from 'react';

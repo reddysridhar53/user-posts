@@ -110,10 +110,10 @@ export class HomePage extends PureComponent {
       const {
         id,
         title,
-        comments = [],
+        commentIds = [],
         user: { username, id: userId },
       } = post;
-      const totalComments = comments.length;
+      const totalComments = commentIds.length;
       const commentsString =
         totalComments === 0
           ? 'No Comments'
@@ -184,7 +184,7 @@ export class HomePage extends PureComponent {
           ) : null}
         </InputContainer>
         <PostsContainer>
-          <PageTitle>Posts</PageTitle>
+          <PageTitle>{`Posts`}</PageTitle>
           <PostsContent>{this.renderPosts()}</PostsContent>
         </PostsContainer>
       </HomePageWrapper>

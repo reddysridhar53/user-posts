@@ -1,8 +1,8 @@
 import React, { useMemo } from 'react';
-import PropTypes from 'prop-types'
+import PropTypes from 'prop-types';
+import BackButton from '../../components/BackButton';
 import {
     UserDetailsWrapper,
-    Backbtn,
     PageTitle,
     UserItemRow,
     UserItemCol,
@@ -20,7 +20,7 @@ function UserDetails(props) {
 
     return (
         <UserDetailsWrapper>
-            <Backbtn to={`/`}>{`Back`}</Backbtn>
+            <BackButton to={`/`}>{`Go to Posts`}</BackButton>
             <PageTitle>{`User Details`}</PageTitle>
             {
                 memoizedUserPorps.map( prop => {

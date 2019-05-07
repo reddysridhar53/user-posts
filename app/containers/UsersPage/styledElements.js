@@ -69,13 +69,3 @@ export const UserDetailsFragment = styled.div`
     flex: 1;
     flex-direction: column;
 `;
-
-export const Backbtn = styled(Link)`
-    color: rgb(162, 103, 214);
-    font-size: 1.5em;
-    margin: 1em 0;
-    cursor: pointer;
-    &:hover {
-        color: rgb(83, 77, 253);
-    }
-`;

@@ -2,6 +2,7 @@ import React, { useMemo } from 'react';
 import PropTypes from 'prop-types'
 import {
     UserDetailsWrapper,
+    Backbtn,
     PageTitle,
     UserItemRow,
     UserItemCol,
@@ -19,6 +20,7 @@ function UserDetails(props) {
 
     return (
         <UserDetailsWrapper>
+            <Backbtn to={`/`}>{`Back`}</Backbtn>
             <PageTitle>{`User Details`}</PageTitle>
             {
                 memoizedUserPorps.map( prop => {

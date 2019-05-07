@@ -134,6 +134,17 @@ export const PostTitle = styled.div`
   }
 `;
 
+export const PostActionWrapper = styled.div`
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+`;
+
+export const PostComment = styled.div`
+  font-size: 1.4em;
+  color: rgba(0, 0, 0, 0.6);
+`;
+
 export const PostUserName = styled(Link)`
   color: rgb(83, 77, 253);
   font-weight: 500;

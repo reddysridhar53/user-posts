@@ -51,7 +51,7 @@ function UsersPage(props) {
                     <LoadingIndicator />
                 ) : errorMessage ? (
                     <ErrorMessageWrapper>{errorMessage}</ErrorMessageWrapper>
-                ) : (
+                ) : (  
                     <UserDetails user={user} />
                 )
             }

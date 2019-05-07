@@ -29,6 +29,8 @@ import {
   PostsContent,
   PostCard,
   PostItem,
+  PostActionWrapper,
+  PostComment,
   PostTitle,
   PostUserName,
   UserLink,
@@ -84,6 +86,7 @@ export class HomePage extends PureComponent {
   handleOutSideClick = event => {
     if (
       event.target &&
+      this.userListContainer && 
       !this.userListContainer.current.contains(event.target) &&
       this.state.showUserListContainer
     ) {
@@ -99,6 +102,7 @@ export class HomePage extends PureComponent {
 
   renderPosts = () => {
     const { posts, loadingPosts } = this.props;
+
     if (loadingPosts) {
       return <LoadingIndicator />;
     }
@@ -106,13 +110,25 @@ export class HomePage extends PureComponent {
       const {
         id,
         title,
+        comments = [],
         user: { username, id: userId },
       } = post;
+      const totalComments = comments.length;
+      const commentsString =
+        totalComments === 0
+          ? 'No Comments'
+          : totalComments > 1
+            ? `${totalComments} Comments`
+            : '1 Comment';
+
       return (
         <PostCard key={id}>
           <PostItem to={`/posts/${id}`}>
             <PostTitle>{title}</PostTitle>
-            <PostUserName to={`/users/${userId}`}>{username}</PostUserName>
+            <PostActionWrapper>
+              <PostComment>{commentsString}</PostComment>
+              <PostUserName to={`/users/${userId}`}>{username}</PostUserName>
+            </PostActionWrapper>
           </PostItem>
         </PostCard>
       );

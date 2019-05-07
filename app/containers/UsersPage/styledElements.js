@@ -1,4 +1,5 @@
 import styled , { css } from 'styled-components';
+import { Link } from 'react-router-dom';
 
 export const UserPageWrapper = styled.section`
     display: flex;
@@ -16,10 +17,14 @@ export const PageTitle = styled.h1`
 
 export const UserDetailsWrapper = styled.div`
     display: flex;
+    width: 100%;
     flex: 1;
     flex-direction: column;
     max-width: 964px;
     margin: 0 auto;
+    @media only screen and (max-width: 964px) {
+        padding: 1em;
+    }
 `;
 
 export const UserItemRow = styled.div`
@@ -43,8 +48,34 @@ export const UserItemCol = styled.div`
         font-size: 1.8em;
         color: rgba(0, 0, 0, 0.6);
     `};
+    @media only screen and (max-width: 964px) {
+        font-size: 1.6em;
+        flex: 1 0 70%;
+        ${({ main }) => 
+        main && 
+        css`
+            flex: 1 0 30%;
+            font-size: 1.4em;
+        `};
+    }
 `;
 
 export const ErrorMessageWrapper = styled.div`
     display: flex;
+`;
+
+export const UserDetailsFragment = styled.div`
+    display: flex;
+    flex: 1;
+    flex-direction: column;
+`;
+
+export const Backbtn = styled(Link)`
+    color: rgb(162, 103, 214);
+    font-size: 1.5em;
+    margin: 1em 0;
+    cursor: pointer;
+    &:hover {
+        color: rgb(83, 77, 253);
+    }
 `;

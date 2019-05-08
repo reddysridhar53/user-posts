@@ -1,6 +1,6 @@
-/**
- * Asynchronously loads the component for NotFoundPage
- */
+/*
+  Asynchronously loads NotFoundPage
+*/
 
 import React from 'react';
 import loadable from 'utils/loadable';

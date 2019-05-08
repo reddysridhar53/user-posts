@@ -1,6 +1,6 @@
 import React from 'react';
 import PropTypes from 'prop-types';
-import { NavWrapper, H, Img, ImageWrapper } from './elements';
+import { NavWrapper, H, Img, ImageWrapper } from './styledElements';
 
 function NavBar({ sticky, logoImg }) {
   return (

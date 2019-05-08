@@ -8,31 +8,30 @@ import { initialState } from './reducer';
 const PostPageInitialState = state => state.get('postPage', initialState);
 
 const selectLoadingPost = () =>
-  createSelector(
-    PostPageInitialState,
-    nextState => nextState.get('loadingPost'),
+  createSelector(PostPageInitialState, nextState =>
+    nextState.get('loadingPost'),
   );
 
 const selectGetPost = () =>
-  createSelector(
-    PostPageInitialState,
-    nextState =>
-      // console.log('Next: ', nextState.get('post'));
-      nextState.get('post').toJS(),
+  createSelector(PostPageInitialState, nextState =>
+    // console.log('Next: ', nextState.get('post'));
+    nextState.get('post').toJS(),
   );
 
 const selectLoadingComments = () =>
-  createSelector(
-    PostPageInitialState,
-    nextState => nextState.get('loadingComments'),
+  createSelector(PostPageInitialState, nextState =>
+    nextState.get('loadingComments'),
   );
 
 const selectGetComments = () =>
-  createSelector(
-    PostPageInitialState,
-    nextState =>
-      // console.log('Next: ', nextState.get('comments'));
-      nextState.get('comments').toJS(),
+  createSelector(PostPageInitialState, nextState =>
+    // console.log('Next: ', nextState.get('comments'));
+    nextState.get('comments').toJS(),
   );
 
-export { selectLoadingPost, selectGetPost, selectLoadingComments, selectGetComments };
+export {
+  selectLoadingPost,
+  selectGetPost,
+  selectLoadingComments,
+  selectGetComments,
+};

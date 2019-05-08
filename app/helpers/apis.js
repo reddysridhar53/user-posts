@@ -21,7 +21,7 @@ export const findUsers = (query = '') => {
   return makeRequest(options);
 };
 
-export const findUserById = (userId) => {
+export const findUserById = userId => {
   const options = {};
 
   options.url = `${config.API_URL}/users/${userId}`;
@@ -29,7 +29,7 @@ export const findUserById = (userId) => {
   return makeRequest(options);
 };
 
-export const getPostById = (postId) => {
+export const getPostById = postId => {
   const options = {};
 
   options.url = `${config.API_URL}/posts/${postId}?_expand=user`;
@@ -37,7 +37,7 @@ export const getPostById = (postId) => {
   return makeRequest(options);
 };
 
-export const getCommentsByPostId = (postId) => {
+export const getCommentsByPostId = postId => {
   const options = {};
 
   options.url = `${config.API_URL}/posts/${postId}/comments?_expand=user`;

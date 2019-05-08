@@ -81,7 +81,8 @@ export class HomePage extends PureComponent {
   handleOutSideClick = event => {
     if (
       event.target &&
-      this.userListContainer && this.userListContainer.current && 
+      this.userListContainer &&
+      this.userListContainer.current &&
       !this.userListContainer.current.contains(event.target) &&
       this.state.showUserListContainer
     ) {
@@ -89,11 +90,11 @@ export class HomePage extends PureComponent {
     }
   };
 
-  handlePostClick = (postId) => {
+  handlePostClick = postId => {
     const { history } = this.props;
 
     history.push(`/posts/${postId}`);
-  }
+  };
 
   debounceSearch = () => {
     const { onFindUsers } = this.props;
@@ -123,7 +124,7 @@ export class HomePage extends PureComponent {
             : '1 Comment';
 
       return (
-        <PostItemDetails 
+        <PostItemDetails
           key={postId}
           title={title}
           postId={postId}

@@ -20,6 +20,7 @@ import saga from './saga';
 import { getPosts, findUsers } from './actions';
 
 import LoadingIndicator from '../../components/LoadingIndicator';
+import PostItemDetails from './PostItemDetails';
 import {
   PageTitle,
   HomePageWrapper,
@@ -27,12 +28,6 @@ import {
   TextInput,
   PostsContainer,
   PostsContent,
-  PostCard,
-  PostItem,
-  PostActionWrapper,
-  PostComment,
-  PostTitle,
-  PostUserName,
   UserLink,
   UsersContainer,
   LoaderWrapper,
@@ -94,6 +89,12 @@ export class HomePage extends PureComponent {
     }
   };
 
+  handlePostClick = (postId) => {
+    const { history } = this.props;
+
+    history.push(`/posts/${postId}`);
+  }
+
   debounceSearch = () => {
     const { onFindUsers } = this.props;
 
@@ -108,10 +109,10 @@ export class HomePage extends PureComponent {
     }
     return posts.map(post => {
       const {
-        id,
+        id: postId,
         title,
         commentIds = [],
-        user: { username, id: userId },
+        user: { name, id: userId },
       } = post;
       const totalComments = commentIds.length;
       const commentsString =
@@ -122,15 +123,15 @@ export class HomePage extends PureComponent {
             : '1 Comment';
 
       return (
-        <PostCard key={id}>
-          <PostItem to={`/posts/${id}`}>
-            <PostTitle>{title}</PostTitle>
-            <PostActionWrapper>
-              <PostComment>{commentsString}</PostComment>
-              <PostUserName to={`/users/${userId}`}>{username}</PostUserName>
-            </PostActionWrapper>
-          </PostItem>
-        </PostCard>
+        <PostItemDetails 
+          key={postId}
+          title={title}
+          postId={postId}
+          name={name}
+          userId={userId}
+          onPostClick={this.handlePostClick}
+          commentsString={commentsString}
+        />
       );
     });
   };

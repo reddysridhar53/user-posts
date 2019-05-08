@@ -7,6 +7,7 @@ export default styled(Link)`
     font-size: 1.5em;
     margin: 1em 0;
     cursor: pointer;
+    text-decoration: none;
     &:hover {
         color: rgb(83, 77, 253);
     }

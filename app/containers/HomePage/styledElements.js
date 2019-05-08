@@ -106,17 +106,17 @@ export const PostCard = styled.div`
   }
 `;
 
-export const PostItem = styled(Link)`
+export const PostItem = styled.div`
   border-radius: 0.5em;
   padding: 1em;
   display: flex;
   background: #fff;
   flex-direction: column;
-  transition: 350ms all ease-in;
+  transition: 250ms all ease-in;
   box-shadow: 2px 4px 4px 0px rgba(0, 0, 0, 0.1);
   &:hover {
     box-shadow: 4px 8px 8px 0px rgba(0, 0, 0, 0.1);
-    transform: scale(1.1, 1.1);
+    transform: scale(1.05, 1.05);
     cursor: pointer;
   }
 `;
@@ -150,6 +150,7 @@ export const PostUserName = styled(Link)`
   font-weight: 500;
   font-size: 1.6em;
   transition: 250ms all ease-in;
+  text-decoration: none;
   &:hover {
     color: rgb(162, 103, 214);
   }

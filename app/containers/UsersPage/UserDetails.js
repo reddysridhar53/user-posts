@@ -23,7 +23,7 @@ function UserDetails(props) {
             <BackButton to={`/`}>{`Go to Posts`}</BackButton>
             <PageTitle>{`User Details`}</PageTitle>
             {
-                memoizedUserPorps.map( prop => {
+                memoizedUserPorps.map( (prop, i) => {
                     const value = user[prop];
 
                     return (
@@ -34,7 +34,7 @@ function UserDetails(props) {
                                     prop !== 'postIds' ? (
                                         value
                                     ) : (
-                                        value.map((elm,i) => <span>{`${elm}${i !== value.length - 1 ? ', ' : ''}`}</span>)
+                                        value.map((elm,i) => <span key={elm}>{`${elm}${i !== value.length - 1 ? ', ' : ''}`}</span>)
                                     )
                                 }
                             </UserItemCol>

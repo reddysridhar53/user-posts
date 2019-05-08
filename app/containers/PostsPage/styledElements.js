@@ -28,7 +28,7 @@ export const PostContainer = styled.div`
   flex-direction: column;
 `;
 export const PostContent = styled.div`
-  font-size: 1.5em;
+  font-size: 1.4em;
   display: flex;
   flex-direction: column;
   flex: 1;
@@ -39,7 +39,7 @@ export const CommentsContainer = styled.div`
   flex-direction: column;
 `;
 export const CommentsContent = styled.div`
-  font-size: 1.2em;
+  font-size: 1.1em;
   display: flex;
   flex-direction: column;
   flex: 1;
@@ -80,6 +80,7 @@ export const PostUser = styled(Link)`
   transition: 250ms all ease-in;
   margin-top: 0.5em;
   text-transform: capitalize;
+  text-decoration: none;
   &:hover {
     color: rgb(162, 103, 214);
   }

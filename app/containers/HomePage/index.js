@@ -86,7 +86,7 @@ export class HomePage extends PureComponent {
   handleOutSideClick = event => {
     if (
       event.target &&
-      this.userListContainer && 
+      this.userListContainer && this.userListContainer.current && 
       !this.userListContainer.current.contains(event.target) &&
       this.state.showUserListContainer
     ) {

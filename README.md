@@ -11,6 +11,8 @@
 <div align="left">
   For more details click here <a href="https://www.reactboilerplate.com" target="_blank">react-boilerPlate</a>.
 </div>
+<br/>
+<br/>
 <div align="left">
   <strong>Follow the below steps to run the application:</strong>
   <ol>

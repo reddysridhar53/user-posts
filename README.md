@@ -11,3 +11,11 @@
 <div align="left">
   For more details click here <a href="https://www.reactboilerplate.com" target="_blank">react-boilerPlate</a>.
 </div>
+<div align="left">
+  <strong>Follow the below steps to run the application:</strong>
+  <ol>
+    <li>git fork/clone the repo.</li>
+    <li>npm install (npm > 8.0)</li>
+    <li>npm run start</li>
+  </ol>
+</div>

@@ -8,31 +8,43 @@ import { initialState } from './reducer';
 const HomepageInitialState = state => state.get('homePage', initialState);
 
 const selectPosts = () =>
-  createSelector(
-    HomepageInitialState,
-    nextState =>
-      // console.log('Next: ', nextState.get('posts'));
-      nextState.get('posts').toJS(),
+  createSelector(HomepageInitialState, nextState =>
+    // console.log('Next: ', nextState.get('posts'));
+    nextState.get('posts').toJS(),
   );
 
 const selectLoadingPosts = () =>
-  createSelector(
-    HomepageInitialState,
-    nextState => nextState.get('loadingPosts'),
+  createSelector(HomepageInitialState, nextState =>
+    nextState.get('loadingPosts'),
   );
 
 const selectFindingUsers = () =>
-  createSelector(
-    HomepageInitialState,
-    nextState => nextState.get('findingUsers'),
+  createSelector(HomepageInitialState, nextState =>
+    nextState.get('findingUsers'),
   );
 
 const selectFindUsers = () =>
-  createSelector(
-    HomepageInitialState,
-    nextState =>
-      // console.log('Next: ', nextState.get('users'));
-      nextState.get('users').toJS(),
+  createSelector(HomepageInitialState, nextState =>
+    // console.log('Next: ', nextState.get('users'));
+    nextState.get('users').toJS(),
   );
 
-export { selectPosts, selectFindUsers, selectLoadingPosts, selectFindingUsers };
+const selectFindingPosts = () =>
+  createSelector(HomepageInitialState, nextState =>
+    nextState.get('findingPosts'),
+  );
+
+const selectSearchPosts = () =>
+  createSelector(HomepageInitialState, nextState =>
+    // console.log('Next: ', nextState.get('users'));
+    nextState.get('postsFound').toJS(),
+  );
+
+export {
+  selectPosts,
+  selectFindUsers,
+  selectLoadingPosts,
+  selectFindingUsers,
+  selectSearchPosts,
+  selectFindingPosts,
+};

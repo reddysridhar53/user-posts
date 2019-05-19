@@ -13,13 +13,18 @@ import {
   FIND_USERS,
   FIND_USERS_ERROR,
   FIND_USERS_SUCCESS,
+  FIND_POSTS,
+  FIND_POSTS_ERROR,
+  FIND_POSTS_SUCCESS,
 } from './constants';
 
 export const initialState = fromJS({
   findingUsers: false,
+  findingPosts: false,
   loadingPosts: false,
   posts: [],
   users: [],
+  postsFound: [],
 });
 
 function homePageReducer(state = initialState, action) {
@@ -40,6 +45,14 @@ function homePageReducer(state = initialState, action) {
       return state
         .set('findingUsers', false)
         .set('users', fromJS(action.payload));
+    case FIND_POSTS:
+      return state.set('findingPosts', true);
+    case FIND_POSTS_ERROR:
+      return state.set('findingPosts', false);
+    case FIND_POSTS_SUCCESS:
+      return state
+        .set('findingPosts', false)
+        .set('postsFound', fromJS(action.payload));
     default:
       return state;
   }

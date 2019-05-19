@@ -169,3 +169,32 @@ export const UserLink = styled(Link)`
     background: #f5f5f5;
   }
 `;
+
+export const SearchComponentWrapper = styled.div`
+  display: flex;
+  padding: 2em 1em 0;
+  align-items: center;
+  justify-content: flex-start;
+`;
+
+export const SearchTypeHeader = styled.div`
+  font-size: 2em;
+  color: rgba(0, 0, 0, 0.75);
+  margin-right: 2em;
+`;
+
+export const SearchComponent = styled.div`
+  font-size: 1.5em;
+  color: rgba(0, 0, 0, 0.6);
+  transition: 250ms all ease-in;
+  padding: 0.5em 1em;
+  cursor: pointer;
+  font-weight: 500;
+  border-bottom: 2px solid transparent;
+  ${({ active }) =>
+    active &&
+    css`
+      color: rgba(0, 0, 0, 1);
+      border-bottom: 2px solid #009688;
+    `};
+`;

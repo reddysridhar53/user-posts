@@ -10,6 +10,9 @@ import {
   FIND_USERS,
   FIND_USERS_ERROR,
   FIND_USERS_SUCCESS,
+  FIND_POSTS,
+  FIND_POSTS_ERROR,
+  FIND_POSTS_SUCCESS,
 } from './constants';
 
 export function getPosts() {
@@ -49,6 +52,27 @@ export function findUsersSuccess(payload) {
 export function findUsersError(payload) {
   return {
     type: FIND_USERS_ERROR,
+    payload,
+  };
+}
+
+export function findPosts(payload) {
+  return {
+    type: FIND_POSTS,
+    payload,
+  };
+}
+
+export function findPostsSuccess(payload) {
+  return {
+    type: FIND_POSTS_SUCCESS,
+    payload,
+  };
+}
+
+export function findPostsError(payload) {
+  return {
+    type: FIND_POSTS_ERROR,
     payload,
   };
 }

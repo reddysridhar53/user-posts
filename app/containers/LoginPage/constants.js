@@ -1,0 +1,3 @@
+export const SET_LOGIN = 'SET_LOGIN';
+export const SET_LOGIN_SUCCESS = 'SET_LOGIN_SUCCESS';
+export const SET_LOGIN_FAILURE = 'SET_LOGIN_FAILURE';

@@ -1,4 +1,5 @@
 import {
+  ADD_COMMENT,
   GET_POST_BY_ID,
   GET_POST_BY_ID_SUCCESS,
   GET_POST_BY_ID_ERROR,
@@ -6,6 +7,13 @@ import {
   GET_COMMENTS_BY_POST_ID_SUCCESS,
   GET_COMMENTS_BY_POST_ID_ERROR,
 } from './constants';
+
+export function addComment(payload) {
+  return {
+    type: ADD_COMMENT,
+    payload
+  }
+}
 
 export function getPostById(payload) {
   return {

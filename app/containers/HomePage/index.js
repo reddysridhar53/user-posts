@@ -1,4 +1,4 @@
-import React, { PureComponent } from 'react';
+import React, { Fragment, PureComponent } from 'react';
 import PropTypes from 'prop-types';
 import { connect } from 'react-redux';
 import { Helmet } from 'react-helmet';
@@ -14,10 +14,12 @@ import {
   selectFindUsers,
   selectLoadingPosts,
   selectFindingUsers,
+  selectSearchPosts,
+  selectFindingPosts,
 } from './selectors';
 import reducer from './reducer';
 import saga from './saga';
-import { getPosts, findUsers } from './actions';
+import { getPosts, findUsers, findPosts } from './actions';
 
 import LoadingIndicator from '../../components/LoadingIndicator';
 import PostItemDetails from './PostItemDetails';
@@ -31,6 +33,9 @@ import {
   UserLink,
   UsersContainer,
   LoaderWrapper,
+  SearchComponentWrapper,
+  SearchTypeHeader,
+  SearchComponent,
 } from './styledElements';
 
 /* eslint-disable react/prefer-stateless-function */
@@ -38,6 +43,7 @@ export class HomePage extends PureComponent {
   state = {
     query: '',
     showUserListContainer: '',
+    activeSearchType: 'posts',
   };
 
   constructor(props) {
@@ -45,6 +51,10 @@ export class HomePage extends PureComponent {
     this.debounceSearch = debounce(this.debounceSearch, 500);
     this.userListContainer = React.createRef();
     document.addEventListener('click', this.handleOutSideClick, false);
+    this.searchTypes = [
+      { label: 'Posts', name: 'posts' },
+      { label: 'Users', name: 'users' },
+    ];
   }
 
   debouncedSearch(fn, time) {
@@ -78,6 +88,10 @@ export class HomePage extends PureComponent {
     this.debounceSearch();
   };
 
+  handleSearchType = event => {
+    this.setState({ activeSearchType: event.target.getAttribute('name') });
+  };
+
   handleOutSideClick = event => {
     if (
       event.target &&
@@ -97,9 +111,53 @@ export class HomePage extends PureComponent {
   };
 
   debounceSearch = () => {
-    const { onFindUsers } = this.props;
+    const { onFindUsers, onFindPosts } = this.props;
+    const { activeSearchType, query } = this.state;
 
-    onFindUsers(this.state.query);
+    activeSearchType === 'posts' ? onFindPosts(query) : onFindUsers(query);
+  };
+
+  searchPosts = () => {};
+
+  getSearchType = () => {
+    const { users, postsFound } = this.props;
+    const { activeSearchType } = this.state;
+    let serahcTypeNode;
+
+    if (activeSearchType === 'posts') {
+      serahcTypeNode = (
+        <Fragment>
+          <TextInput
+            onChange={this.handleSearchQueryChange}
+            placeholder="Search for posts"
+          />
+          {this.state.showUserListContainer ? (
+            <UsersContainer
+              visible={!!postsFound.length || this.state.showUserListContainer}
+            >
+              {this.renderPostsData()}
+            </UsersContainer>
+          ) : null}
+        </Fragment>
+      );
+    } else {
+      serahcTypeNode = (
+        <Fragment>
+          <TextInput
+            onChange={this.handleSearchQueryChange}
+            placeholder="Search for users"
+          />
+          {this.state.showUserListContainer ? (
+            <UsersContainer
+              visible={!!users.length || this.state.showUserListContainer}
+            >
+              {this.renderUsers()}
+            </UsersContainer>
+          ) : null}
+        </Fragment>
+      );
+    }
+    return serahcTypeNode;
   };
 
   renderPosts = () => {
@@ -133,6 +191,33 @@ export class HomePage extends PureComponent {
           onPostClick={this.handlePostClick}
           commentsString={commentsString}
         />
+      );
+    });
+  };
+
+  renderPostsData = () => {
+    const { postsFound, findingPosts } = this.props;
+
+    if (findingPosts) {
+      return (
+        <LoaderWrapper>
+          <LoadingIndicator mini />
+        </LoaderWrapper>
+      );
+    }
+    if (!findingPosts && this.state.query && !postsFound.length) {
+      return (
+        <LoaderWrapper>
+          {`No Posts found with query ${this.state.query}`}
+        </LoaderWrapper>
+      );
+    }
+    return postsFound.map(user => {
+      const { id, title } = user;
+      return (
+        <UserLink key={id} to={`/posts/${id}?query=${this.state.query}`}>
+          {title}
+        </UserLink>
       );
     });
   };
@@ -172,18 +257,22 @@ export class HomePage extends PureComponent {
           <title>Huddl Home Page - Sample posts(Frontend Task)</title>
           <meta name="description" content="Sample Posts List" />
         </Helmet>
+        <SearchComponentWrapper>
+          <SearchTypeHeader>Search: </SearchTypeHeader>
+          {this.searchTypes.map(type => {
+            return (
+              <SearchComponent
+                onClick={this.handleSearchType}
+                name={type.name}
+                active={type.name === this.state.activeSearchType}
+              >
+                {type.label}
+              </SearchComponent>
+            );
+          })}
+        </SearchComponentWrapper>
         <InputContainer ref={this.userListContainer}>
-          <TextInput
-            onChange={this.handleSearchQueryChange}
-            placeholder="Search for users"
-          />
-          {this.state.showUserListContainer ? (
-            <UsersContainer
-              visible={!!users.length || this.state.showUserListContainer}
-            >
-              {this.renderUsers()}
-            </UsersContainer>
-          ) : null}
+          {this.getSearchType()}
         </InputContainer>
         <PostsContainer>
           <PageTitle>{`Posts`}</PageTitle>
@@ -197,6 +286,8 @@ export class HomePage extends PureComponent {
 HomePage.propTypes = {
   onGetPosts: PropTypes.func.isRequired,
   onFindUsers: PropTypes.func.isRequired,
+  onFindPosts: PropTypes.func.isRequired,
+  findingPosts: PropTypes.bool.isRequired,
   loadingPosts: PropTypes.bool.isRequired,
   findingUsers: PropTypes.bool.isRequired,
   posts: PropTypes.array,
@@ -205,6 +296,8 @@ HomePage.propTypes = {
 
 const mapStateToProps = createStructuredSelector({
   posts: selectPosts(),
+  postsFound: selectSearchPosts(),
+  findingPosts: selectFindingPosts(),
   users: selectFindUsers(),
   loadingPosts: selectLoadingPosts(),
   findingUsers: selectFindingUsers(),
@@ -213,6 +306,7 @@ const mapStateToProps = createStructuredSelector({
 const mapDispatchToProps = dispatch => ({
   onGetPosts: () => dispatch(getPosts()),
   onFindUsers: query => dispatch(findUsers(query)),
+  onFindPosts: query => dispatch(findPosts(query)),
 });
 
 const withConnect = connect(

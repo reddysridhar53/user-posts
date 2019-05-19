@@ -10,12 +10,13 @@ import React from 'react';
 import { Helmet } from 'react-helmet';
 import styled from 'styled-components';
 import { Switch, Route } from 'react-router-dom';
-
+import PrivateRoute from './PrivateRoute';
 import HomePage from 'containers/HomePage/Loadable';
+import LoginPage from 'containers/LoginPage/Loadable';
 import PostsPage from 'containers/PostsPage/Loadable';
 import UsersPage from 'containers/UsersPage/Loadable';
 import NotFoundPage from 'containers/NotFoundPage/Loadable';
-import Header from 'components/Header';
+import Header from './Header';
 // import Footer from 'components/Footer';
 
 import GlobalStyle from '../../global-styles';
@@ -32,6 +33,7 @@ const AppWrapper = styled.main`
 `;
 
 export default function App() {
+
   return (
     <AppWrapper>
       <Helmet>
@@ -42,13 +44,13 @@ export default function App() {
         />
       </Helmet>
       <Header />
-      <Switch>
-        <Route exact path="/" component={HomePage} />
-        <Route exact path="/posts/:postId" component={PostsPage} />
-        <Route exact path="/users/:userId" component={UsersPage} />
-        <Route path="" component={NotFoundPage} />
-      </Switch>
-      {/* <Footer /> */}
+        <Switch>
+          <Route exact path="/login" component={LoginPage} />
+          <PrivateRoute exact path="/" component={HomePage} />
+          <PrivateRoute exact path="/posts/:postId" component={PostsPage} />
+          <PrivateRoute exact path="/users/:userId" component={UsersPage} />
+          <Route path="" component={NotFoundPage} />
+        </Switch>
       <GlobalStyle />
     </AppWrapper>
   );

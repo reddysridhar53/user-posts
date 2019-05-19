@@ -1,3 +1,4 @@
+export const ADD_COMMENT = 'ADD_COMMENT';
 export const GET_POST_BY_ID = 'GET_POST_BY_ID';
 export const GET_POST_BY_ID_SUCCESS = 'GET_POST_BY_ID_SUCCESS';
 export const GET_POST_BY_ID_ERROR = 'GET_POST_BY_ID_ERROR';

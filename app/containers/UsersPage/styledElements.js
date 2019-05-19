@@ -14,6 +14,12 @@ export const PageTitle = styled.h1`
   color: rgba(0, 0, 0, 0.8);
 `;
 
+export const UserDetailsStatsWrapper = styled.div`
+  display: flex;
+  width: 100%;
+  flex: 1;
+  flex-direction: column;
+`;
 export const UserDetailsWrapper = styled.div`
   display: flex;
   width: 100%;
@@ -24,6 +30,10 @@ export const UserDetailsWrapper = styled.div`
   @media only screen and (max-width: 964px) {
     padding: 1em;
   }
+`;
+
+export const UserStats = styled(UserDetailsWrapper)`
+  
 `;
 
 export const UserItemRow = styled.div`

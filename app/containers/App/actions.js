@@ -15,7 +15,7 @@
  *    }
  */
 
-import { LOAD_REPOS, LOAD_REPOS_SUCCESS, LOAD_REPOS_ERROR } from './constants';
+import { LOAD_REPOS, SET_LOGOUT, SET_LOGOUT_SUCCESS, LOAD_REPOS_SUCCESS, LOAD_REPOS_ERROR, SET_LOGOUT_FAILURE } from './constants';
 
 /**
  * Load the repositories, this action starts the request saga
@@ -56,4 +56,25 @@ export function repoLoadingError(error) {
     type: LOAD_REPOS_ERROR,
     error,
   };
+}
+
+export function setLogout(payload) {
+  return {
+    type: SET_LOGOUT,
+    payload,
+  }
+}
+
+export function setLogoutSuccess(payload) {
+  return {
+    type: SET_LOGOUT_SUCCESS,
+    payload,
+  }
+}
+
+export function setLogoutFailure(payload) {
+  return {
+    type: SET_LOGOUT_FAILURE,
+    payload,
+  }
 }

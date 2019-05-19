@@ -23,6 +23,7 @@ import { getPostById, getCommentsByPostId, addComment } from './actions';
 import BackButton from '../../components/BackButton';
 import LoadingIndicator from '../../components/LoadingIndicator';
 import AddCommentModal from './AddCommentModal';
+import { getUrlParameter } from 'utils/helper';
 import {
   H,
   PageTitle,
@@ -35,13 +36,16 @@ import {
   PageTitleWrapper,
   CommentButton,
   ModalWrapper,
+  PostItem, PostTitle, PostBody, PostUser
 } from './styledElements';
+
+import Highlighter from "react-highlight-words";
 
 export class PostPage extends Component {
   state = {
     openAddCommentModal: false,
     commentForm: {},
-  }
+  };
   componentDidMount() {
     const { postId } = this.props.match.params;
 
@@ -51,16 +55,16 @@ export class PostPage extends Component {
   }
 
   closeAddCommentModal = () => {
-    this.setState({ openAddCommentModal: false })
-  }
+    this.setState({ openAddCommentModal: false });
+  };
 
   handleAddCommentModal = () => {
-    this.setState({ openAddCommentModal: true })
-  }
+    this.setState({ openAddCommentModal: true });
+  };
 
-  handleContentChange = (form) => {
+  handleContentChange = form => {
     this.setState({ commentForm: form });
-  }
+  };
 
   handleSaveComment = () => {
     const { onAddComment } = this.props;
@@ -76,11 +80,11 @@ export class PostPage extends Component {
       user: {
         id: 100,
         name: 'dummy',
-      }
-    }
+      },
+    };
     onAddComment && onAddComment({ postId, comment: commentForm });
     this.setState({ openAddCommentModal: false });
-  }
+  };
 
   highlightText = () => {
     const { location } = this.props;
@@ -93,23 +97,33 @@ export class PostPage extends Component {
           this.highlightSearchedtext(params.get('query'));
         }
       } else {
-        
+        const params = getUrlParameter('query');
+
+        if (params) {
+          this.highlightSearchedtext(params);
+        }
       }
     }
-  }
+  };
 
-  highlightSearchedtext = (searchQuery) => {
-    const elm = this.postContainer.current;
+  highlightSearchedtext = searchQuery => {
+    if (this.postContainer && this.postContainer.current) {
+      const elm = this.postContainer.current;
+      if (elm) {
+        console.log('Elm: ', elm);
+        const originalText = elm.innerHTML;
+        const keyRegex = new RegExp(searchQuery, 'gi');
+        const textForChange = originalText;
 
-    if (elm) {
-      const originalText = elm.innerHTML;
-      const keyRegex = new RegExp(searchQuery,'gi');
-      const textForChange = originalText;
-
-      let marked = textForChange.replace(keyRegex, `<mark>${searchQuery}</mark>`);
-      // elm.innerHTML = marked;	
+        let marked = textForChange.replace(
+          keyRegex,
+          `<mark>${searchQuery}</mark>`,
+        );
+        elm.innerHTML = marked;
+        console.log('Elm: ', elm);
+      }
     }
-  }
+  };
 
   renderPostDetails = () => {
     const { post, loadingPost } = this.props;
@@ -120,7 +134,30 @@ export class PostPage extends Component {
     if (!Object.keys(post).length) {
       return <H>{`No Post Found.`}</H>;
     }
-    return <PostDetails data={post} />;
+    // if (!this.timeoutHighlight) {
+    //   this.timeoutHighlight = setTimeout(() => this.highlightText(), 0);
+    // }
+    const { title, user, content } = post;
+    return (
+      <PostItem>
+        <PostTitle>
+          <Highlighter
+            searchWords={[getUrlParameter('query')]}
+            autoEscape={true}
+            textToHighlight={title}
+          />
+        </PostTitle>
+        <PostBody>
+          <Highlighter
+            searchWords={[getUrlParameter('query')]}
+            autoEscape={true}
+            textToHighlight={content}
+          />
+        </PostBody>
+        <PostUser to={`/users/${user.id}`}>{user.name}</PostUser>
+      </PostItem>
+    )
+    // return <PostDetails data={post} />;
   };
 
   renderComments = () => {
@@ -140,37 +177,39 @@ export class PostPage extends Component {
   render() {
     return (
       <Fragment>
-      <PostPageWrapper>
-        <Helmet>
-          <title>Huddl Post Page - Sample post(Frontend Task)</title>
-          <meta name="description" content="Sample Post Detail Page" />
-        </Helmet>
-        <PostCommentWrapper>
-          <BackButton to={`/`}>{`Go to Posts`}</BackButton>
-          <PostContainer ref={this.postContainer}>
-            <PageTitleWrapper>
-              <PageTitle>{`Post`}</PageTitle>
-              <CommentButton onClick={this.handleAddCommentModal}>{`Add Comment`}</CommentButton>
-            </PageTitleWrapper>
-            <PostContent>{this.renderPostDetails()}</PostContent>
-          </PostContainer>
-          <CommentsContainer>
-            <PageTitle>{`Comments`}</PageTitle>
-            <CommentsContent>{this.renderComments()}</CommentsContent>
-          </CommentsContainer>
-        </PostCommentWrapper>
-      </PostPageWrapper>
-        {
-          this.state.openAddCommentModal ? (
-            <AddCommentModal 
-              openAddCommentModal={this.state.openAddCommentModal}
-              closeAddCommentModal={this.closeAddCommentModal}
-              handleContentChange={this.handleContentChange}
-              handleSaveComment={this.handleSaveComment}
-              commentForm={this.state.commentForm}
-            />
-          ) : null
-        }
+        <PostPageWrapper>
+          <Helmet>
+            <title>Huddl Post Page - Sample post(Frontend Task)</title>
+            <meta name="description" content="Sample Post Detail Page" />
+          </Helmet>
+          <PostCommentWrapper>
+            <BackButton to={`/`}>{`Go to Posts`}</BackButton>
+            <PostContainer>
+              <PageTitleWrapper>
+                <PageTitle>{`Post`}</PageTitle>
+                <CommentButton
+                  onClick={this.handleAddCommentModal}
+                >{`Add Comment`}</CommentButton>
+              </PageTitleWrapper>
+              <PostContent ref={this.postContainer}>
+                {this.renderPostDetails()}
+              </PostContent>
+            </PostContainer>
+            <CommentsContainer>
+              <PageTitle>{`Comments`}</PageTitle>
+              <CommentsContent>{this.renderComments()}</CommentsContent>
+            </CommentsContainer>
+          </PostCommentWrapper>
+        </PostPageWrapper>
+        {this.state.openAddCommentModal ? (
+          <AddCommentModal
+            openAddCommentModal={this.state.openAddCommentModal}
+            closeAddCommentModal={this.closeAddCommentModal}
+            handleContentChange={this.handleContentChange}
+            handleSaveComment={this.handleSaveComment}
+            commentForm={this.state.commentForm}
+          />
+        ) : null}
       </Fragment>
     );
   }

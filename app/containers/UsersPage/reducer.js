@@ -10,21 +10,26 @@ import {
 const constructChart = (data) => {
   const posts = data[0];
   const comments = data[1];
-
-  return [
-    {
-      value: posts.length,
-      color:"#F7464A",
-      highlight: "#FF5A5E",
-      label: "Posts"
-    },
-    {
-      value: comments.length,
-      color: "#46BFBD",
-      highlight: "#5AD3D1",
-      label: "Comments"
-    },
-  ]
+  const userStats =  {
+    labels: [
+      'Posts',
+      'Comments',
+    ],
+    datasets: [
+      {
+        data: [posts.length, comments.length],
+        backgroundColor: [
+          '#FF6384',
+          '#36A2EB',
+        ],
+        hoverBackgroundColor: [
+          '#FF6384',
+          '#36A2EB',
+        ]
+      }
+    ]
+  };
+  return userStats;
 }
 
 export const reducer = (state, action) => {

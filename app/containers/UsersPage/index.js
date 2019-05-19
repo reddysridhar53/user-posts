@@ -21,7 +21,7 @@ function UsersPage(props) {
     user: {},
     errorMessage: null,
     loadingUserStats: false,
-    userStats: [],
+    userStats: {},
   };
   const [state, dispatch] = useReducer(reducer, initialState);
   const userId = props.match.params.userId;

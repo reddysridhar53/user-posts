@@ -21,6 +21,17 @@ export const findUsers = (query = '') => {
   return makeRequest(options);
 };
 
+export const findPosts = (query = '') => {
+  if (query) {
+    query = `?q=${query}`;
+  }
+  const options = {};
+
+  options.url = `${config.API_URL}/posts${query}`;
+  options.method = 'GET';
+  return makeRequest(options);
+};
+
 export const findUserById = userId => {
   const options = {};
 
@@ -44,6 +55,20 @@ export const getCommentsByPostId = postId => {
   options.method = 'GET';
   return makeRequest(options);
 };
+
+export const getUserStats = userId => {
+  const userStats = ['posts', 'comments'];
+  const userStatsRequests = userStats.map(stats => {
+    const options = {};
+
+    options.url = `${config.API_URL}/users/${userId}/${stats}`;
+    options.method = 'GET';
+    return options;
+  });
+  const userStatsRequestsPromise = userStatsRequests.map(options => makeRequest(options));
+
+  return Promise.all(userStatsRequestsPromise);
+}
 
 const parseJson = data => {
   if (JSON.parse && JSON.parse(data)) {

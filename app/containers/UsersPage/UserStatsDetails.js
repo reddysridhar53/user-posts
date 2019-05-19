@@ -2,27 +2,29 @@ import React from 'react';
 import PropTypes from 'prop-types';
 import LoadingIndicator from '../../components/LoadingIndicator';
 import { UserStats, PageTitle } from './styledElements';
-const PieChart = require('react-chartjs').Pie;
+import { Pie } from 'react-chartjs-2';
 
 function UserStatsDetails({ loading, userStats }) {
-    console.log('UserStats: ', userStats);
-    return (
-        <UserStats>
-            <PageTitle>{`User Stats`}</PageTitle>
-            {
-                !loading && userStats && userStats.length ? (
-                    <PieChart data={userStats} redraw width="200px" height="200px" />
-                ) : (
-                    <LoadingIndicator />
-                )
-            }
-        </UserStats>
-    )
+  return (
+    <UserStats>
+      <PageTitle>{`User Stats`}</PageTitle>
+      {!loading ? (
+        <Pie
+          data={userStats}
+          width={200}
+          height={200}
+          options={{ maintainAspectRatio: false }}
+        />
+      ) : (
+        <LoadingIndicator />
+      )}
+    </UserStats>
+  );
 }
 
 UserStatsDetails.propTypes = {
-    loading: PropTypes.bool.isRequired,
-    userStats: PropTypes.array.isRequired,
-}
+  loading: PropTypes.bool.isRequired,
+  userStats: PropTypes.array.isRequired,
+};
 
 export default UserStatsDetails;

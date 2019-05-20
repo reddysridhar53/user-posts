@@ -24,7 +24,7 @@ function UserStatsDetails({ loading, userStats }) {
 
 UserStatsDetails.propTypes = {
   loading: PropTypes.bool.isRequired,
-  userStats: PropTypes.array.isRequired,
+  userStats: PropTypes.object.isRequired,
 };
 
 export default UserStatsDetails;

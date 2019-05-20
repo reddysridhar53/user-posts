@@ -169,8 +169,8 @@ export class PostPage extends Component {
     if (!comments.length) {
       return <H>{`No Comments.`}</H>;
     }
-    return comments.map(comment => {
-      return <PostDetails data={comment} key={comment.id} />;
+    return comments.map((comment, index) => {
+      return <PostDetails data={comment} key={comment.id +'-'+index} />;
     });
   };
 

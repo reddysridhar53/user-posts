@@ -264,6 +264,7 @@ export class HomePage extends PureComponent {
               <SearchComponent
                 onClick={this.handleSearchType}
                 name={type.name}
+                key={type.name}
                 active={type.name === this.state.activeSearchType}
               >
                 {type.label}

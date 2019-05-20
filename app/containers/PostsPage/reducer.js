@@ -16,7 +16,7 @@ import {
   GET_COMMENTS_BY_POST_ID_ERROR
 } from './constants';
 
-const initialState = fromJS({
+export const initialState = fromJS({
   loadingPost: false,
   loadingComments: false,
   post: {},

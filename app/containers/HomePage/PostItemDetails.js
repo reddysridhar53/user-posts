@@ -42,9 +42,9 @@ function PostItemDetails({
 
 PostItemDetails.propTypes = {
   title: PropTypes.string.isRequired,
-  postId: PropTypes.oneOf([PropTypes.string, PropTypes.number]).isRequired,
-  name: PropTypes.oneOf([PropTypes.string, PropTypes.number]).isRequired,
-  userId: PropTypes.string.isRequired,
+  postId: PropTypes.oneOfType([PropTypes.string, PropTypes.number]).isRequired,
+  name: PropTypes.oneOfType([PropTypes.string, PropTypes.number]).isRequired,
+  userId: PropTypes.oneOfType([PropTypes.string, PropTypes.number]).isRequired,
   commentsString: PropTypes.string.isRequired,
   onPostClick: PropTypes.func.isRequired,
 };
